@@ -32,6 +32,18 @@ if(NOT HDF5_VOL_ASYNC_INSTALL_TEST_DIR)
   set(HDF5_VOL_ASYNC_INSTALL_TEST_DIR ${CMAKE_INSTALL_PREFIX}/test)
 endif()
 
+include(CheckSymbolExists)
+
+check_symbol_exists(H5_HAVE_PARALLEL "H5pubconf.h" HDF5_HAVE_PARALLEL)
+if(NOT HDF5_HAVE_PARALLEL)
+  message(FATAL_ERROR "HDF5 library needs to enable parallel support.")
+endif()
+
+check_symbol_exists(H5_HAVE_THREADSAFE "H5pubconf.h" HDF5_HAVE_THREADSAFE)
+if(NOT HDF5_HAVE_THREADSAFE)
+  message(FATAL_ERROR "HDF5 library needs to enable threadsafe support.")
+endif()
+
 set(HDF5_VOL_ASYNC_PACKAGE "hdf5_vol_async")
 set(HDF5_VOL_ASYNC_PACKAGE_NAME "HDF5_VOL_ASYNC")
 set(HDF5_VOL_ASYNC_PACKAGE_DESCRIPTION "HDF5 Asynchronous I/O VOL connector")
